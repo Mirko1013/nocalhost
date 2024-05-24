@@ -53,86 +53,13 @@ jobs:
           curl -T ${WINDOWS_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${WINDOWS_BINARY}?version=${GITHUB_SHA}" --retry 5
           curl -T ${LINUX_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${LINUX_BINARY}?version=${GITHUB_SHA}" --retry 5
           curl -T ${LINUX_ARM64_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${LINUX_ARM64_BINARY}?version=${GITHUB_SHA}" --retry 5
-
-      - name: Push to Coding Artifacts
-        if: ${{ github.ref == 'refs/heads/main' && github.repository == 'nocalhost/nocalhost' }}
-        env:
-          WINDOWS_BINARY: 'nhctl-windows-amd64.exe'
-          LINUX_BINARY: 'nhctl-linux-amd64'
-          LINUX_ARM64_BINARY: 'nhctl-linux-arm64'
-        run: |
-          cd build
-          curl -T ${WINDOWS_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${WINDOWS_BINARY}?version=main" --retry 5
-          curl -T ${LINUX_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${LINUX_BINARY}?version=main" --retry 5
-          curl -T ${LINUX_ARM64_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${LINUX_ARM64_BINARY}?version=main" --retry 5
-
-      - name: Push to Coding Artifacts
-        if: ${{ github.ref == 'refs/heads/dev' && github.repository == 'nocalhost/nocalhost' }}
-        env:
-          WINDOWS_BINARY: 'nhctl-windows-amd64.exe'
-          LINUX_BINARY: 'nhctl-linux-amd64'
-          LINUX_ARM64_BINARY: 'nhctl-linux-arm64'
-        run: |
-          cd build
-          curl -T ${WINDOWS_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${WINDOWS_BINARY}?version=dev" --retry 5
-          curl -T ${LINUX_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${LINUX_BINARY}?version=dev" --retry 5
-          curl -T ${LINUX_ARM64_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${LINUX_ARM64_BINARY}?version=dev" --retry 5
-
-  build-nhctl-macos:
-    needs: build-syncthing-macos-windows
-    name: Build nhctl
-    runs-on: macos-11
-    steps:
-
-      - name: Set up Go 1.x
-        uses: actions/setup-go@v2
+    
+      - name: Update  windows synchting to artifact
+        uses: actions/upload-artifact@v2
         with:
-          go-version: 1.16.7
-
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
-
-      - name: Get synchting macos and windows cache
-        uses: actions/download-artifact@v2
-        with:
-          name: synchthing-macos-windows-cache-${GITHUB_SHA}
-          path: ./
-
-      - name: Build
-        run: |
-          export GITHUB_ACTION=true
-          make nhctl-osx
-          make nhctl-osx-arm64
-
-      - name: Push to Coding Artifacts
-        if: ${{ github.repository == 'nocalhost/nocalhost' }}
-        env:
-          OSX_BINARY: 'nhctl-darwin-amd64'
-          OSX_ARM64_BINARY: 'nhctl-darwin-arm64'
-        run: |
-          cd build
-          curl -T ${OSX_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${OSX_BINARY}?version=${GITHUB_SHA}" --retry 5
-          curl -T ${OSX_ARM64_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${OSX_ARM64_BINARY}?version=${GITHUB_SHA}" --retry 5
-
-      - name: Push to Coding Artifacts
-        if: ${{ github.ref == 'refs/heads/main' && github.repository == 'nocalhost/nocalhost' }}
-        env:
-          OSX_BINARY: 'nhctl-darwin-amd64'
-          OSX_ARM64_BINARY: 'nhctl-darwin-arm64'
-        run: |
-          cd build
-          curl -T ${OSX_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${OSX_BINARY}?version=main" --retry 5
-          curl -T ${OSX_ARM64_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${OSX_ARM64_BINARY}?version=main" --retry 5
-
-      - name: Push to Coding Artifacts
-        if: ${{ github.ref == 'refs/heads/dev' && github.repository == 'nocalhost/nocalhost' }}
-        env:
-          OSX_BINARY: 'nhctl-darwin-amd64'
-          OSX_ARM64_BINARY: 'nhctl-darwin-arm64'
-        run: |
-          cd build
-          curl -T ${OSX_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${OSX_BINARY}?version=dev" --retry 5
-          curl -T ${OSX_ARM64_BINARY} -u ${{ secrets.CODING_ARTIFACTS_USER }}:${{ secrets.CODING_ARTIFACTS_PASS }} "https://nocalhost-generic.pkg.coding.net/nocalhost/nhctl/${OSX_ARM64_BINARY}?version=dev" --retry 5
+          path: |
+            ./build/nhctl-windows-amd64.exe
+          name: nhctl-windows-amd64.exe
 
   build-syncthing-linux:
     name: Build syncthing amd64&arm64
