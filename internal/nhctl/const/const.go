@@ -38,9 +38,9 @@ const (
 	ServiceTypeLabel         = "nocalhost.dev/service-type"
 	AppLabel                 = "nocalhost.dev/app"
 
-	DefaultSideCarImage = "nocalhost-docker.pkg.coding.net/nocalhost/public/nocalhost-sidecar:syncthing"
-	SSHSideCarImage     = "nocalhost-docker.pkg.coding.net/nocalhost/public/nocalhost-sidecar:sshversion"
-	DefaultVPNImage     = "nocalhost-docker.pkg.coding.net/nocalhost/public/nocalhost-vpn:v1"
+	DefaultSideCarImage = "10.155.97.245/k8s/nocalhost-sidecar:syncthing"
+	SSHSideCarImage     = "10.155.97.245/k8s/nocalhost-sidecar:sshversion"
+	DefaultVPNImage     = "10.155.97.245/k8s/nocalhost-vpn:v1"
 
 	DefaultApplicationSyncPidFile = "syncthing.pid"
 
