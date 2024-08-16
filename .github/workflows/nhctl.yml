@@ -101,7 +101,7 @@ jobs:
 
   build-syncthing-macos-windows:
     name: Build syncthing macos windows
-    runs-on: macos-latest
+    runs-on: macos-12
     steps:
 
       - name: Set up Go 1.x
