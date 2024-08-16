@@ -249,10 +249,10 @@ func (c *ConnectOptions) DoConnect(ctx context.Context) (chan error, error) {
 	if err = util.WaitPortToBeFree(10800, time.Second*5); err != nil {
 		return nil, err
 	}
-	/*c.trafficManagerIP, err = createOutboundRouterPodIfNecessary(c.clientset, c.Namespace, &util.RouterIP, c.cidrs, c.GetLogger())
+	c.trafficManagerIP, err = createOutboundRouterPodIfNecessary(c.clientset, c.Namespace, &util.RouterIP, c.cidrs, c.GetLogger())
 	if err != nil {
 		return nil, errors2.WithStack(err)
-	}*/
+	}
 	c.GetLogger().Info("your ip is " + c.localTunIP.IP.String())
 	if err = c.portForward(ctx); err != nil {
 		return nil, err
