@@ -6,21 +6,24 @@
 package pkg
 
 import (
-	"context"
-	"fmt"
-	"net"
-	_const "nocalhost/internal/nhctl/const"
-	"nocalhost/internal/nhctl/vpn/pkg/handler"
-	"nocalhost/internal/nhctl/vpn/remote"
-	"nocalhost/internal/nhctl/vpn/util"
-	"strings"
+ "context"
+ "errors"
+ "fmt"
+ "net"
+ _const "nocalhost/internal/nhctl/const"
+ "nocalhost/internal/nhctl/vpn/pkg/handler"
+ "nocalhost/internal/nhctl/vpn/remote"
+ "nocalhost/internal/nhctl/vpn/util"
+ "strings"
+ "time"
 
-	log "github.com/sirupsen/logrus"
-	v1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/resource"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	cmdutil "k8s.io/kubectl/pkg/cmd/util"
+ log "github.com/sirupsen/logrus"
+ v1 "k8s.io/api/core/v1"
+ "k8s.io/apimachinery/pkg/api/resource"
+ metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ "k8s.io/apimachinery/pkg/watch"
+ "k8s.io/client-go/kubernetes"
+ cmdutil "k8s.io/kubectl/pkg/cmd/util"
 )
 
 func createOutboundRouterPodIfNecessary(
@@ -95,8 +98,8 @@ func createOutboundRouterPodIfNecessary(
 			PriorityClassName: "system-cluster-critical",
 		},
 	}
-	return nil, nil
-	/*pods, err := clientset.CoreV1().Pods(ns).Create(context.TODO(), &pod, metav1.CreateOptions{})
+
+	pods, err := clientset.CoreV1().Pods(ns).Create(context.TODO(), &pod, metav1.CreateOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +131,7 @@ func createOutboundRouterPodIfNecessary(
 			return nil, errors.New("wait for pod traffic manager to be ready timeout")
 		}
 	}
- */
+ 
 }
 
 // CreateInboundPod
