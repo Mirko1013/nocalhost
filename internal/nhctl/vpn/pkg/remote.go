@@ -160,11 +160,14 @@ func CreateInboundPod(
 		return err
 	}
 	util.GetLoggerFromContext(ctx).Infoln("inject vpn sidecar ...")
-	err = sc.InjectVPNContainer()
+	/*err = sc.InjectVPNContainer()
 	if err != nil {
 		util.GetLoggerFromContext(ctx).Errorf("inject vpn sidecar failed, error: %v\n", err)
 		return err
 	}
+ 	
 	util.GetLoggerFromContext(ctx).Infoln("inject vpn sidecar ok")
+ */
+	util.GetLoggerFromContext(ctx).Infoln("skip inject vpn sidecar ...")
 	return nil
 }
