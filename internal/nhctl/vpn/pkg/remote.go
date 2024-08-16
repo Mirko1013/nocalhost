@@ -98,7 +98,8 @@ func createOutboundRouterPodIfNecessary(
 			PriorityClassName: "system-cluster-critical",
 		},
 	}
-	pods, err := clientset.CoreV1().Pods(ns).Create(context.TODO(), &pod, metav1.CreateOptions{})
+	return nil, nil
+	/*pods, err := clientset.CoreV1().Pods(ns).Create(context.TODO(), &pod, metav1.CreateOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -130,6 +131,7 @@ func createOutboundRouterPodIfNecessary(
 			return nil, errors.New("wait for pod traffic manager to be ready timeout")
 		}
 	}
+ */
 }
 
 // CreateInboundPod
