@@ -111,7 +111,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '12.5.0'
+          xcode-version: '13.1.0'
 
       - name: Checkout syncthing
         uses: actions/checkout@v2.3.4
