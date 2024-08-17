@@ -149,7 +149,8 @@ func CreateInboundPod(
 	shadowTunIP,
 	routes string,
 ) error {
-	var sc handler.Handler
+	/*
+ 	var sc handler.Handler
 	sc, err := getHandler(factory, clientset, namespace, workloads, &handler.PodRouteConfig{
 		LocalTunIP:           localTunIP,
 		InboundPodTunIP:      shadowTunIP,
@@ -160,7 +161,7 @@ func CreateInboundPod(
 		return err
 	}
 	util.GetLoggerFromContext(ctx).Infoln("inject vpn sidecar ...")
-	/*err = sc.InjectVPNContainer()
+	err = sc.InjectVPNContainer()
 	if err != nil {
 		util.GetLoggerFromContext(ctx).Errorf("inject vpn sidecar failed, error: %v\n", err)
 		return err
