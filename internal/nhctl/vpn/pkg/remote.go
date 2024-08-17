@@ -11,7 +11,6 @@ import (
  "fmt"
  "net"
  _const "nocalhost/internal/nhctl/const"
- "nocalhost/internal/nhctl/vpn/pkg/handler"
  "nocalhost/internal/nhctl/vpn/remote"
  "nocalhost/internal/nhctl/vpn/util"
  "strings"
