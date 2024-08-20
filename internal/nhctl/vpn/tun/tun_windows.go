@@ -47,7 +47,7 @@ func createTun(cfg Config) (net.Conn, *net.Interface, error) {
 
 func addTunRoutes(ifName winipcfg.LUID, gw string, routes ...IPRoute) error {
 	_ = ifName.FlushRoutes(windows.AF_INET)
-	_, ipnet, err := net.ParseCIDR("0.0.0.0/0")
+	_, ipnet, _ := net.ParseCIDR("0.0.0.0/0")
 	for _, route := range routes {
 		if route.Dest == nil || route.Dest == ipnet {
 			continue
